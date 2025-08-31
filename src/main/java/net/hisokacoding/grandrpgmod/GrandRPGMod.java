@@ -1,5 +1,9 @@
 package net.hisokacoding.grandrpgmod;
 
+
+import net.hisokacoding.grandrpgmod.screen.ModMenuTypes;
+import net.hisokacoding.grandrpgmod.screen.custom.BestiaryMenu;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -40,6 +44,8 @@ public class GrandRPGMod {
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
+        ModMenuTypes.register(modEventBus);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
@@ -63,6 +69,10 @@ public class GrandRPGMod {
         @SubscribeEvent
         static void onClientSetup(FMLClientSetupEvent event) {
 
+        }
+
+        public static void registerScreens(RegisterMenuScreensEvent event){
+            event.register(ModMenuTypes.BESTIARY_MENU.get(), BestiaryMenu::new);
         }
     }
 }
